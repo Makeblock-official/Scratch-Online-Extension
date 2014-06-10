@@ -34,7 +34,7 @@
     var dpinEnum = {"D2":0,"D3":1,"D4":2,"D5":3,"D6":4,"D7":5,"D8":6,"D9":7,"D10":8,"D11":9,"D12":10,"D13":11}
     var apinEnum = {"A0":0,"A1":1,"A2":2,"A3":3,"A4":4,"A5":5}
     var pinmodeEnum = {"输入":1,"输出":0}
-    var levelEnum = {"低电平":0,"高电平":1}
+    var levelEnum = {"低电平":0,"高电平":1,"关":0,"开":1}
     
     var firmVersion = 0;
 
@@ -365,7 +365,7 @@
             ["", "设置LED%m.normalPort 第%n 盏 红色%n 绿色%n 蓝色%n", "doRunRgb", "接口3", 0, 0, 0, 0],
             ["r", "超声波%m.normalPort 距离", "doUltrasonic", "接口3"],
             ["r", "光线传感器%m.normalPort", "doLightSensor", "接口3"],
-            ["", "设置光线传感器%m.normalPort LED状态为 %m.digital", "doRunLightSensor", "接口3", 1],
+            ["", "设置光线传感器%m.normalPort LED状态为 %m.switch", "doRunLightSensor", "接口3", "开"],
             ["r", "巡线传感器%m.normalPort", "doLinefollow", "接口3"],
             ["r", "电位器%m.normalPort", "doPotentialMeter", "接口7"],
             ["r", "陀螺仪 %m.GyroAxis 角度", "doGyro", "X轴"],
@@ -374,7 +374,7 @@
             ["r", "摇杆 %m.normalPort %m.Axis", "doJoystick", "接口3", "X轴"],
             ["b", "数字口 %n ", "doDRead", "13"],
             ["r", "模拟口 %n ", "doARead", "0"],
-            ["", "设置 数字口 %n 输出为 %n", "doDWrite", "13", 1],
+            ["", "设置 数字口 %n 输出为 %m.digital", "doDWrite", "13", "高电平"],
             ["", "设置 模拟口 %n 输出为 %n", "doAWrite", "0", 512]
         ],
         menus: {
@@ -390,7 +390,8 @@
 			"type":["数字","模拟"],
 			"Axis":["X轴","Y轴"],
 			"GyroAxis":["X轴","Y轴","Z轴"],
-			"digital":["低电平","高电平"]
+			"digital":["低电平","高电平"],
+			"switch":["关","开"]
         },
     url: 'http://www.makeblock.cc'
     };
