@@ -372,8 +372,6 @@
             ["r", "红外接收器 %m.normalPort", "doInfrared", "Port6"],
             ["r", "当前温度 %m.normalPort%m.slot", "doTemperature", "Port3", "Slot1"],
             ["r", "摇杆 %m.normalPort %m.Axis", "doJoystick", "Port3", "X-Axis"],
-            ["", "设置 数字口 %n 为 %m.mode", "doPinMode", "0", "Input"],
-            ["", "设置 模拟口 %n 为 %m.mode", "doPinMode", "0", "Input"],
             ["b", "数字口 %n ", "doDRead", "13"],
             ["r", "模拟口 %n ", "doARead", "0"],
             ["", "设置 数字口 %n 输出为 %n", "doDWrite", "13", 1],
