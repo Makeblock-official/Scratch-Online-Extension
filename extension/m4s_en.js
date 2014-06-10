@@ -34,7 +34,7 @@
     var dpinEnum = {"D2":0,"D3":1,"D4":2,"D5":3,"D6":4,"D7":5,"D8":6,"D9":7,"D10":8,"D11":9,"D12":10,"D13":11}
     var apinEnum = {"A0":0,"A1":1,"A2":2,"A3":3,"A4":4,"A5":5}
     var pinmodeEnum = {"Input":1,"Output":0}
-    var levelEnum = {"Low":0,"High":1}
+    var levelEnum = {"Low":0,"High":1,"Off":0,"On":1}
     
     var firmVersion = 0;
 
@@ -365,7 +365,7 @@
             ["", "set led %m.normalPort at %n  red %n green %n blue %n", "doRunRgb", "Port3", 0, 0, 0, 0],
             ["r", "ultrasonic sensor %m.normalPort distance", "doUltrasonic", "Port3"],
             ["r", "light sensor %m.normalPort", "doLightSensor", "Port3"],
-            ["", "set light sensor %m.normalPort state %m.digital", "doRunLightSensor", "Port3", 1],
+            ["", "set light sensor %m.normalPort state %m.switch", "doRunLightSensor", "Port3", "On"],
             ["r", "line follower %m.normalPort", "doLinefollow", "Port3"],
             ["r", "potentiometer %m.normalPort", "doPotentialMeter", "Port7"],
             ["r", "gyro %m.GyroAxis angle", "doGyro", "X-Axis"],
@@ -374,7 +374,7 @@
             ["r", "joystick %m.normalPort %m.Axis", "doJoystick", "Port3", "X-Axis"],
             ["b", "digital pin %n ", "doDRead", "13"],
             ["r", "analog pin %n ", "doARead", "0"],
-            ["", "set digital pin %n output %n", "doDWrite", "13", 1],
+            ["", "set digital pin %n output %n", "doDWrite", "13", "High"],
             ["", "set analog pin %n output %n", "doAWrite", "0", 512]
         ],
         menus: {
@@ -390,7 +390,8 @@
 			"type":["Digital","Analog"],
 			"Axis":["X-Axis","Y-Axis"],
 			"GyroAxis":["X-Axis","Y-Axis","Z-Axis"],
-			"digital":["Low","High"]
+			"digital":["Low","High"],
+			"switch":["Off","On"]
         },
     url: 'http://www.makeblock.cc'
     };
