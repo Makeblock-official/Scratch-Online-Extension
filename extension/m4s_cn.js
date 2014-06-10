@@ -28,13 +28,13 @@
     var DIGIPORT = 0xC0
     var ALOGPORT = 0xD0
 
-    var portEnum = {"Port1":port1,"Port2":port2,"Port3":port3,"Port4":port4,"Port5":port5,"Port6":port6,"Port7":port7,"Port8":port8,"M1":m1,"M2":m2,"I2C":I2C}
-    var slotEnum = {"Slot1":slot1,"Slot2":slot2}
-    var axisEnum = {"X-Axis":axisX,"Y-Axis":axisY,"Z-Axis":axisZ}
+    var portEnum = {"接口1":port1,"接口2":port2,"接口3":port3,"接口4":port4,"接口5":port5,"接口6":port6,"接口7":port7,"接口8":port8,"电机接口1":m1,"电机接口2":m2,"I2C":I2C}
+    var slotEnum = {"插口1":slot1,"插口2":slot2}
+    var axisEnum = {"X轴":axisX,"Y轴":axisY,"Z轴":axisZ}
     var dpinEnum = {"D2":0,"D3":1,"D4":2,"D5":3,"D6":4,"D7":5,"D8":6,"D9":7,"D10":8,"D11":9,"D12":10,"D13":11}
     var apinEnum = {"A0":0,"A1":1,"A2":2,"A3":3,"A4":4,"A5":5}
-    var pinmodeEnum = {"Input":1,"Output":0}
-    var levelEnum = {"Low":0,"High":1}
+    var pinmodeEnum = {"输入":1,"输出":0}
+    var levelEnum = {"低电平":0,"高电平":1}
     
     var firmVersion = 0;
 
@@ -175,7 +175,7 @@
 
 
     ext.doMotorRun = function(port,speed) {
-        mod=constructModule(MOTOR,port,"Slot1",0,speed)
+        mod=constructModule(MOTOR,port,"插口1",0,speed)
         deviceRun(mod)
     };
 
@@ -185,13 +185,13 @@
     };
 
     ext.doUltrasonic = function(port){
-        index = appendModule(ULTRASONIC_SENSOR,port,"Slot1",0)
+        index = appendModule(ULTRASONIC_SENSOR,port,"插口1",0)
         sendModuleList()
         return moduleList[index].value[0]
     };
 
     ext.doLinefollow = function(port){
-        index = appendModule(LINEFOLLOWER,port,"Slot1",0)
+        index = appendModule(LINEFOLLOWER,port,"插口1",0)
         sendModuleList()
         return moduleList[index].value[0]
     };
@@ -208,14 +208,14 @@
     };
 
     ext.doLightSensor = function(port){
-        index = appendModule(LIGHT_SENSOR,port,"Slot1",0)
+        index = appendModule(LIGHT_SENSOR,port,"插口1",0)
         sendModuleList()
         return moduleList[index].value[0]
     };
 
     ext.doRunLightSensor = function(port,level){
         value = levelEnum[level]
-        mod=constructModule(LIGHT_SENSOR,port,"Slot1",0,value)
+        mod=constructModule(LIGHT_SENSOR,port,"插口1",0,value)
         deviceRun(mod)
     }
 
@@ -225,7 +225,7 @@
     };
 
     ext.doJoystick = function(port,axis){
-        index = appendModule(JOYSTICK,port,"Slot1",0)
+        index = appendModule(JOYSTICK,port,"插口1",0)
         sendModuleList()
         axis = axisEnum[axis]
         switch(axis){
@@ -237,7 +237,7 @@
     };
 
     ext.doGyro = function(axis){
-        index = appendModule(GYRO,"I2C","Slot1",0)
+        index = appendModule(GYRO,"I2C","插口1",0)
         sendModuleList()
         axis = axisEnum[axis]
         switch(axis){
@@ -251,13 +251,13 @@
     }
 
     ext.doPotentialMeter = function(port){
-        index = appendModule(POTENTIONMETER,port,"Slot2",0)
+        index = appendModule(POTENTIONMETER,port,"插口2",0)
         sendModuleList()
         return moduleList[index].value[0]
     }
 
     ext.doInfrared = function(port){
-        index = appendModule(INFRARED,port,"Slot1",0)
+        index = appendModule(INFRARED,port,"插口1",0)
         sendModuleList()
         return moduleList[index].value[0]
     }
@@ -272,12 +272,12 @@
     }
 
     ext.doRunSeg = function(port,num){
-        mod=constructModule(SEVSEG,port,"Slot1",0,num)
+        mod=constructModule(SEVSEG,port,"插口1",0,num)
         deviceRun(mod)
     }
 
     ext.doRunRgb = function(port,pixal,r,g,b){
-        mod=constructModule(RGBLED,port,"Slot1",0,0)
+        mod=constructModule(RGBLED,port,"插口1",0,0)
         mod.value = [pixal,r,g,b]
         deviceRun(mod)
     }
@@ -285,28 +285,28 @@
     ext.doDWrite = function(pinstr,level){
         pin = dpinEnum[pinstr]
         value = levelEnum[level]
-        mod = constructModule(DIGITAL_OUTPUT,"DIGIPORT","Slot1",0,0)
+        mod = constructModule(DIGITAL_OUTPUT,"DIGIPORT","插口1",0,0)
         mod.pin = pin+2 // +2 be compatable to arduino code
         mod.value = [value]
         deviceRun(mod)
     }
     ext.doAWrite = function(pinstr,value){
         pin = dpinEnum[pinstr]
-        mod = constructModule(ANALOG_OUTPUT,"DIGIPORT","Slot1",0,value)
+        mod = constructModule(ANALOG_OUTPUT,"DIGIPORT","插口1",0,value)
         mod.pin = pin+2 // +2 be compatable to arduino code
         mod.value = [value]
         deviceRun(mod)
     }
 
     ext.doDRead = function(pin){
-        index = appendModule(DIGITAL_INPUT,"DIGIPORT","Slot1",pin)
+        index = appendModule(DIGITAL_INPUT,"DIGIPORT","插口1",pin)
         sendModuleList()
         pinvalue = moduleList[index].value[0];
         return pinvalue
     }
 
     ext.doARead = function(pin){
-        index = appendModule(ANALOG_INPUT,"ALOGPORT","Slot1",pin);
+        index = appendModule(ANALOG_INPUT,"ALOGPORT","插口1",pin);
         sendModuleList();
         pinvalue = moduleList[index].value[0];
         return pinvalue;
@@ -360,37 +360,37 @@
         blocks:[
             ["r", "固件版本","doVersion"],
             ["", "设置电机%m.motorPort 转速%n", "doMotorRun", "M1", 50],
-            ["", "设置舵机%m.servoPort %m.slot 角度%n", "doServoRun", "Port1", "Slot1", 90],
-            ["", "设置数码管%m.normalPort 数字%n", "doRunSeg", "Port3", 100],
-            ["", "设置LED%m.normalPort 第%n 盏 红色%n 绿色%n 蓝色%n", "doRunRgb", "Port3", 0, 0, 0, 0],
-            ["r", "超声波%m.normalPort 距离", "doUltrasonic", "Port3"],
-            ["r", "光线传感器%m.normalPort", "doLightSensor", "Port3"],
-            ["", "设置光线传感器%m.normalPort LED状态为 %m.digital", "doRunLightSensor", "Port3", 1],
-            ["r", "巡线传感器%m.normalPort", "doLinefollow", "Port3"],
-            ["r", "电位器%m.normalPort", "doPotentialMeter", "Port7"],
-            ["r", "陀螺仪 %m.GyroAxis 角度", "doGyro", "X-Axis"],
-            ["r", "红外接收器 %m.normalPort", "doInfrared", "Port6"],
-            ["r", "当前温度 %m.normalPort%m.slot", "doTemperature", "Port3", "Slot1"],
-            ["r", "摇杆 %m.normalPort %m.Axis", "doJoystick", "Port3", "X-Axis"],
+            ["", "设置舵机%m.servoPort %m.slot 角度%n", "doServoRun", "接口1", "插口1", 90],
+            ["", "设置数码管%m.normalPort 数字%n", "doRunSeg", "接口3", 100],
+            ["", "设置LED%m.normalPort 第%n 盏 红色%n 绿色%n 蓝色%n", "doRunRgb", "接口3", 0, 0, 0, 0],
+            ["r", "超声波%m.normalPort 距离", "doUltrasonic", "接口3"],
+            ["r", "光线传感器%m.normalPort", "doLightSensor", "接口3"],
+            ["", "设置光线传感器%m.normalPort LED状态为 %m.digital", "doRunLightSensor", "接口3", 1],
+            ["r", "巡线传感器%m.normalPort", "doLinefollow", "接口3"],
+            ["r", "电位器%m.normalPort", "doPotentialMeter", "接口7"],
+            ["r", "陀螺仪 %m.GyroAxis 角度", "doGyro", "X轴"],
+            ["r", "红外接收器 %m.normalPort", "doInfrared", "接口6"],
+            ["r", "当前温度 %m.normalPort%m.slot", "doTemperature", "接口3", "插口1"],
+            ["r", "摇杆 %m.normalPort %m.Axis", "doJoystick", "接口3", "X轴"],
             ["b", "数字口 %n ", "doDRead", "13"],
             ["r", "模拟口 %n ", "doARead", "0"],
             ["", "设置 数字口 %n 输出为 %n", "doDWrite", "13", 1],
             ["", "设置 模拟口 %n 输出为 %n", "doAWrite", "0", 512]
         ],
         menus: {
-			"normalPort":["Port3","Port4","Port5","Port6","Port7","Port8"],
+			"normalPort":["接口3","接口4","接口5","接口6","接口7","接口8"],
 			"digitalPin":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12","D13"],
 			"analogPin":["A0","A1","A2","A3","A4","A5"],
-			"motorPort":["M1","M2","Port1","Port2"],
-			"servoPort":["Port1","Port2","Port3","Port4","Port5","Port6","Port7","Port8"],
-			"slot":["Slot1","Slot2"],
+			"motorPort":["电机接口1","电机接口2","接口1","接口2"],
+			"servoPort":["接口1","接口2","接口3","接口4","接口5","接口6","接口7","接口8"],
+			"slot":["插口1","插口2"],
 			"device":["Ultrasonic","Line Finder","Light Sensor","Sound Sensor","Joystick","Button"],
 			"exdevice":["LimitSwitch","Temperature"],
-			"mode":["Input","Output"],
-			"type":["Digital","Analog"],
-			"Axis":["X-Axis","Y-Axis"],
-			"GyroAxis":["X-Axis","Y-Axis","Z-Axis"],
-			"digital":["Low","High"]
+			"mode":["输入","输出"],
+			"type":["数字","模拟"],
+			"Axis":["X轴","Y轴"],
+			"GyroAxis":["X轴","Y轴","Z轴"],
+			"digital":["低电平","高电平"]
         },
     url: 'http://www.makeblock.cc'
     };
