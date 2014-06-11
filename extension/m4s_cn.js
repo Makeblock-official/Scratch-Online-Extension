@@ -130,7 +130,7 @@
                 }
                 for(var i=0;i<dataLen;i++){
                     // some special module may take multiple reply
-                    if(moduleList[moduleIndex]==undefined){
+                    if(moduleIndex>=moduleList.length){
                     	continue;
                     }
                     if(moduleList[moduleIndex].module == JOYSTICK){

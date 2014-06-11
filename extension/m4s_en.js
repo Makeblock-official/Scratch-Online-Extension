@@ -129,22 +129,25 @@
                 	return;
                 }
                 for(var i=0;i<dataLen;i++){
+                	if(moduleIndex>=moduleList.length){
+                    	continue;
+                    }
                     // some special module may take multiple reply
                     if(moduleList[moduleIndex].module == JOYSTICK){
-                        value = b2f(s,3+i*4).toFixed(5)
-                        i+=1
-                        value2 = b2f(s,3+i*4).toFixed(5)
+                        value = b2f(s,3+i*4).toFixed(0);
+                        i++;
+                        value2 = b2f(s,3+i*4).toFixed(0);
                         moduleList[moduleIndex].value = [value,value2]
                     }else if(moduleList[moduleIndex].module == GYRO){
-                        value = b2f(s,3+i*4)
-                        i+=1
-                        value2 = b2f(s,3+i*4)
-                        i+=1
-                        value3 = b2f(s,3+i*4)
-                        moduleList[moduleIndex].value = [value,value2,value3]
+                        value = b2f(s,3+i*4);
+                        i++;
+                        value2 = b2f(s,3+i*4);
+                        i++;
+                        value3 = b2f(s,3+i*4);
+                        moduleList[moduleIndex].value = [value,value2,value3];
                     }else{
-                        value = b2f(s,3+i*4)
-                        moduleList[moduleIndex].value = [value]
+                        value = b2f(s,3+i*4);
+                        moduleList[moduleIndex].value = [value];
                     }
                     moduleIndex+=1;
                 }
