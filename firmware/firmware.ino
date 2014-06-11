@@ -43,7 +43,7 @@ union{
 }val;
 
 MeModule modules[12];
-float mVersion = 1.0604;
+float mVersion = 1.0611;
 boolean isAvailable = false;
 boolean isBluetooth = false;
 void setup(){
@@ -315,7 +315,6 @@ void readModules(){
     writeSerial(0xff);
     writeSerial(0x55);
     writeSerial(0x1);
-    readSensor(0,0,0,0);
     if(modulesLen>0){
       for(int i=0;i<modulesLen;i++){
         MeModule module = modules[i];

@@ -123,9 +123,7 @@
         if(s[0]==0xff && s[1]==0x55){
             // ff 55 1 version[4] dev0[4] .... \r \n
             if(s[2]==0x01){
-                var dataLen = (s.length-3-4-2)/4;
-                firmVersion = b2f(s,3).toFixed(4)
-                console.log("get cmd 1:",firmVersion,dataLen);
+                var dataLen = (s.length-3-2)/4;
                 var moduleIndex = 0
                 if(dataLen==0){
                 	return;
@@ -133,19 +131,19 @@
                 for(var i=0;i<dataLen;i++){
                     // some special module may take multiple reply
                     if(moduleList[moduleIndex].module == JOYSTICK){
-                        value = b2f(s,3+4+i*4).toFixed(5)
+                        value = b2f(s,3+i*4).toFixed(5)
                         i+=1
-                        value2 = b2f(s,3+4+i*4).toFixed(5)
+                        value2 = b2f(s,3+i*4).toFixed(5)
                         moduleList[moduleIndex].value = [value,value2]
                     }else if(moduleList[moduleIndex].module == GYRO){
-                        value = b2f(s,3+4+i*4)
+                        value = b2f(s,3+i*4)
                         i+=1
-                        value2 = b2f(s,3+4+i*4)
+                        value2 = b2f(s,3+i*4)
                         i+=1
-                        value3 = b2f(s,3+4+i*4)
+                        value3 = b2f(s,3+i*4)
                         moduleList[moduleIndex].value = [value,value2,value3]
                     }else{
-                        value = b2f(s,3+4+i*4)
+                        value = b2f(s,3+i*4)
                         moduleList[moduleIndex].value = [value]
                     }
                     moduleIndex+=1;
@@ -266,14 +264,9 @@
     }
 
     ext.doVersion = function(){
-    
-        var cc = new Uint8Array(4);
-        cc[0]=0xff;
-        cc[1]=0x55;
-        cc[2]=0x04;
-        cc[3]=0x0; 
-        device.send(cc.buffer);
-        return firmVersion;
+        index = appendModule(VERSION,0,0,0)
+        sendModuleList();
+        return moduleList[index].value[0].toFixed(4);
     };
 
     ext.doButton = function(port){
