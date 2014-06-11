@@ -286,6 +286,19 @@ void parseData(){
         }
       }
       break;
+      case 0x4:{
+        //reset
+        dc.reset(M1);
+        dc.run(0);
+        dc.reset(M2);
+        dc.run(0);
+        dc.reset(PORT_1);
+        dc.run(0);
+        dc.reset(PORT_2);
+        dc.run(0);
+        callOK();
+      }
+     break;
   }
 }
 void callOK(){

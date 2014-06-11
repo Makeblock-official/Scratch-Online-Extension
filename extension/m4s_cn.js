@@ -314,6 +314,12 @@
 
     ext.resetAll = function(){
         console.log("resetAll")
+        var cc = new Uint8Array(4);
+        cc[0]=0xff;
+        cc[1]=0x55;
+        cc[2]=0x04;
+        cc[3]=0x0; 
+        device.send(cc.buffer);
     };
 
     ext._deviceConnected = function(dev) {
