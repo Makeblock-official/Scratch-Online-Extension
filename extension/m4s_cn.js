@@ -359,7 +359,7 @@
     var descriptor = {
         blocks:[
             ["r", "固件版本","doVersion"],
-            ["", "设置电机%m.motorPort 转速%n", "doMotorRun", "M1", 50],
+            ["", "设置电机%m.motorPort 转速%n", "doMotorRun", "电机接口1", 50],
             ["", "设置舵机%m.servoPort %m.slot 角度%n", "doServoRun", "接口1", "插口1", 90],
             ["", "设置数码管%m.normalPort 数字%n", "doRunSeg", "接口3", 100],
             ["", "设置LED%m.normalPort 第%n 盏 红色%n 绿色%n 蓝色%n", "doRunRgb", "接口3", 0, 0, 0, 0],
