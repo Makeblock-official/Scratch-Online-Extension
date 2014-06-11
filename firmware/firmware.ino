@@ -177,6 +177,7 @@ void parseData(){
   isStart = false;
   switch(readBuffer(2)){
     case 0x1:{
+      if(readBuffer(3)>0){
         int l = readBuffer(3)/2;
         for(int i=0;i<l;i++){
           int device = readBuffer(i*2+4);
@@ -188,8 +189,11 @@ void parseData(){
           modules[i].pin = readBuffer(i*2+5);
         }
         modulesLen = l;
-        readModules();
+      }else{
+        modulesLen = 0;
       }
+        readModules();
+     }
      break;
      case 0x2:{
         int l = readBuffer(3);
@@ -312,9 +316,11 @@ void readModules(){
     writeSerial(0x55);
     writeSerial(0x1);
     readSensor(0,0,0,0);
-    for(int i=0;i<modulesLen;i++){
-      MeModule module = modules[i];
-      readSensor(module.device,module.port,module.slot,module.pin);
+    if(modulesLen>0){
+      for(int i=0;i<modulesLen;i++){
+        MeModule module = modules[i];
+        readSensor(module.device,module.port,module.slot,module.pin);
+      }
     }
     writeEnd();
 }
