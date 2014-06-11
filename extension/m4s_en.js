@@ -124,15 +124,18 @@
             // ff 55 1 version[4] dev0[4] .... \r \n
             if(s[2]==0x01){
                 var dataLen = (s.length-3-4-2)/4;
-                firmVersion = b2f(s,3).toFixed(5)
+                firmVersion = b2f(s,3).toFixed(4)
                 console.log("get cmd 1:",firmVersion,dataLen);
                 var moduleIndex = 0
+                if(dataLen==0){
+                	return;
+                }
                 for(var i=0;i<dataLen;i++){
                     // some special module may take multiple reply
                     if(moduleList[moduleIndex].module == JOYSTICK){
-                        value = b2f(s,3+4+i*4)
+                        value = b2f(s,3+4+i*4).toFixed(5)
                         i+=1
-                        value2 = b2f(s,3+4+i*4)
+                        value2 = b2f(s,3+4+i*4).toFixed(5)
                         moduleList[moduleIndex].value = [value,value2]
                     }else if(moduleList[moduleIndex].module == GYRO){
                         value = b2f(s,3+4+i*4)
