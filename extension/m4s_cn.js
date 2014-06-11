@@ -88,17 +88,17 @@
 
     function sendModuleList(){
         if(!device) return;
-        len = moduleList.length
+        len = moduleList.length;
         // ff 55 1 numdev dev1 port|slot 
-        var buff = new Uint8Array(4+len*2)
-        buff[0]=0xff
-        buff[1]=0x55
-        buff[2]=0x01
-        buff[3]=len*2
+        var buff = new Uint8Array(4+len*2);
+        buff[0]=0xff;
+        buff[1]=0x55;
+        buff[2]=0x01;
+        buff[3]=len*2;
         for(var i=0;i<moduleList.length;i++){
-            mod = moduleList[i]
-            buff[4+i*2] = mod.module
-            buff[4+i*2+1] = mod.module>=DIGITAL_INPUT?mod.pin:(mod.port+mod.slot)
+            mod = moduleList[i];
+            buff[4+i*2] = mod.module;
+            buff[4+i*2+1] = mod.module>=DIGITAL_INPUT?mod.pin:(mod.port+mod.slot);
         }
         console.log("sendModuleList:",buff)
         device.send(buff.buffer);
@@ -130,21 +130,24 @@
                 }
                 for(var i=0;i<dataLen;i++){
                     // some special module may take multiple reply
+                    if(moduleList[moduleIndex]==undefined){
+                    	continue;
+                    }
                     if(moduleList[moduleIndex].module == JOYSTICK){
                         value = b2f(s,3+i*4).toFixed(0);
-                        i+=1;
+                        i++;
                         value2 = b2f(s,3+i*4).toFixed(0);
                         moduleList[moduleIndex].value = [value,value2];
                     }else if(moduleList[moduleIndex].module == GYRO){
-                        value = b2f(s,3+i*4)
-                        i+=1
-                        value2 = b2f(s,3+i*4)
-                        i+=1
-                        value3 = b2f(s,3+i*4)
+                        value = b2f(s,3+i*4);
+                        i++;
+                        value2 = b2f(s,3+i*4);
+                        i++;
+                        value3 = b2f(s,3+i*4);
                         moduleList[moduleIndex].value = [value,value2,value3]
                     }else{
-                        value = b2f(s,3+i*4)
-                        moduleList[moduleIndex].value = [value]
+                        value = b2f(s,3+i*4);
+                        moduleList[moduleIndex].value = [value];
                     }
                     moduleIndex+=1;
                 }

@@ -121,7 +121,7 @@
     function parsePackage(s){
         console.log("rx",s);
         if(s[0]==0xff && s[1]==0x55){
-            // ff 55 1 version[4] dev0[4] .... \r \n
+            // ff 55 1 dev0[4] .... \r \n
             if(s[2]==0x01){
                 var dataLen = (s.length-3-2)/4;
                 var moduleIndex = 0
