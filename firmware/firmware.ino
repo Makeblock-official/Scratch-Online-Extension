@@ -9,6 +9,7 @@
 * Copyright (C) 2013 - 2014 Maker Works Technology Co., Ltd. All right reserved.
 * http://www.makeblock.cc/
 **************************************************************************/
+#include <Servo.h>
 #include "MePort.h"
 #include "MeServo.h" 
 #include "MeDCMotor.h" 
@@ -66,18 +67,7 @@ void setup(){
   delay(100);
   buzzerOff();
   
-  OCR0A = 0;
-  TIMSK0 = _BV(OCIE1A);
 }
-volatile uint8_t counter = 0;
-SIGNAL(TIMER0_COMPA_vect) {
-  counter += 1;
-  if (counter >= 10) {
-    counter = 0;
-    servo.refresh();
-  }
-}
-
 int len = 52;
 char buffer[52];
 char bufferBt[52];
@@ -113,11 +103,9 @@ unsigned char prevc=0;
 
 void loop(){
   if(ir.buttonState()==1){ 
-    noInterrupts();
     if(ir.available()>0){
       irRead = ir.read();
     }
-   interrupts(); 
   }else{
     irRead = 0;
   }

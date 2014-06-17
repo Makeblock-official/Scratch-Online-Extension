@@ -1,6 +1,7 @@
 #ifndef MESERVO_H_
 #define MESERVO_H_
 #include <Arduino.h>
+#include <Servo.h>
 #include "MePort.h"
 class MeServo : public MePort{
  public:
@@ -18,6 +19,7 @@ class MeServo : public MePort{
   uint8_t servoPin, angle;
   uint16_t delayTime;
   unsigned long mTime;
+  Servo sv;
   int pinState;
 };
 #endif

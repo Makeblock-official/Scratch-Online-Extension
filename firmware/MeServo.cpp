@@ -28,12 +28,14 @@ void MeServo::attach(uint8_t pin) {
   servoPin = pin;
   angle = 90;
   isAttached = true;
-  pinMode(servoPin, OUTPUT);
+//  pinMode(servoPin, OUTPUT);
+  sv.attach(servoPin);
 }
 
 void MeServo::detach(void) {
   isAttached = false;
-  pinMode(servoPin, INPUT);
+//  pinMode(servoPin, INPUT);
+  sv.detach();
 }
 
 boolean  MeServo::attached(void) {
@@ -42,7 +44,7 @@ boolean  MeServo::attached(void) {
 
 void MeServo::write(uint8_t a) {
   angle = a;
-
+  sv.write(a);
   if (! isAttached) return;
   delayTime = map(a, 0, 180, 1000, 2000);  
 }
