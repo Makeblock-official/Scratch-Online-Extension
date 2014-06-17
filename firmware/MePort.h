@@ -33,10 +33,15 @@ struct cRGB { uint8_t g; uint8_t r; uint8_t b; };
 #define M1     				0x09
 #define M2     				0x0a
 
-
+#if defined(__AVR_ATmega32U4__) 
 // buzzer 
 #define buzzerOn()  DDRE |= 0x04,PORTE |= B00000100
 #define buzzerOff() DDRE |= 0x04,PORTE &= B11111011
+#else
+
+#define buzzerOn()  Serial.println();
+#define buzzerOff() Serial.println();
+#endif
 #define SLOT_1 1
 #define SLOT_2 2
 

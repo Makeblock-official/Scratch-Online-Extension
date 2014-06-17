@@ -48,11 +48,18 @@ boolean isAvailable = false;
 boolean isBluetooth = false;
 void setup(){
   
+#if defined(__AVR_ATmega32U4__) 
   Serial1.begin(9600);
   delay(2000);
   Serial1.println("AT+BAUD8");
   delay(1000);
   Serial1.begin(115200); 
+#else
+  Serial.begin(9600);
+  delay(2000);
+  Serial.println("AT+BAUD8");
+  delay(1000);
+#endif
   Serial.begin(115200);
 
   buzzerOn();
@@ -156,10 +163,19 @@ void writeBuffer(int index,unsigned char c){
  } 
 }
 void writeEnd(){
+  
+#if defined(__AVR_ATmega32U4__) 
  isBluetooth?Serial1.println():Serial.println(); 
+#else
+ Serial.println(); 
+#endif
 }
 void writeSerial(unsigned char c){
+  #if defined(__AVR_ATmega32U4__) 
  isBluetooth?Serial1.write(c):Serial.write(c); 
+ #else
+ Serial.write(c);
+ #endif
 }
 void readSerial(){
   isAvailable = false;
@@ -167,11 +183,14 @@ void readSerial(){
     isAvailable = true;
     isBluetooth = false;
     serialRead = Serial.read();
-  }else if(Serial1.available()>0){
+  }
+    #if defined(__AVR_ATmega32U4__) 
+  else if(Serial1.available()>0){
     isAvailable = true;
     isBluetooth = true;
     serialRead = Serial1.read();
   }
+  #endif
 }
 void parseData(){
   isStart = false;
