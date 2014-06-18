@@ -1,6 +1,8 @@
 Scratch-Online-Extension
 ========================
 
+Click here to watch the demo of makeblock for scratch online.
+[![alt text](images/video.jpg "Makeblock for Scratch Demo")](https://www.youtube.com/watch?v=R4OKdSfYP44)
 
 The Firmware files are arduino codes used for makeblock board(arduino compatible).
 
