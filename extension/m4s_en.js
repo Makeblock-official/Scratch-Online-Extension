@@ -119,7 +119,7 @@
     }
 
     function parsePackage(s){
-        console.log("rx",s);
+        console.log("parsePack:",s);
         if(s[0]==0xff && s[1]==0x55){
             // ff 55 1 dev0[4] .... \r \n
             if(s[2]==0x01){
@@ -336,16 +336,21 @@
         device.id = ser
         device.open({ stopBits: 0, bitRate: 115200, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
+            console.log("rx:",new Uint8Array(data))
             if(!rxbuff){
                 rxbuff = new Uint8Array(data)
             }else{
                 var s = new Uint8Array(data)
                 rxbuff = appendBuffer(rxbuff,s)
             }
-            if(rxbuff[rxbuff.length-1]==0xA){
-                parsePackage(rxbuff)
-                rxbuff = null;
-            }
+            if(rxbuff!=null){
+            var bufflen = rxbuff.length
+            for(var i=0;i<bufflen-1;i++){
+                if(rxbuff[i] == 0xD && rxbuff[i+1]==0xA){ // trace to \n\r
+                    parsePackage(rxbuff)
+                    rxbuff = null;
+                }
+            }}
         });
     };
 
